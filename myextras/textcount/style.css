@@ -1,0 +1,29 @@
+body {
+    background-color: black;
+    color: #00ff00;
+    border: 1px solid;
+    padding: 10px;
+    margin: 10px;
+}
+blockquote {
+    color: #00ff00;
+    font-size: 3em;
+    text-align: center;
+}
+div#content {
+    color: #00ff00;
+    font-size: 2em;
+    text-align: center;
+}
+textarea {
+    width: 70%;
+    height: 170px;
+    background: rgba(0, 255, 0, 0.31);
+    color: #00ff00;
+    font-size: 15px;
+    padding: 10px;
+}
+span {
+    color: #00ff00;
+    background: #000000;
+}
