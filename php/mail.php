@@ -20,7 +20,7 @@ require './phpmailer/src/SMTP.php';
   // Receiver's Email
 --------------------------------------------- */
 
-$toEmail = "your-email@website.com"; // Replace Your Email Address
+$toEmail = "emailsanchi@gmail.com"; // Replace Your Email Address
 
 
 /* --------------------------------------------
@@ -42,7 +42,7 @@ $recaptcha_secret = 'YOUR_RECAPTCHA_SECRET_KEY'; // Your Google reCaptcha Secret
 /* --------------------------------------------
   // Subject
 --------------------------------------------- */
-$subject = "Form Response from Your Website"; // Your Subject
+$subject = "[Important] Message From Your Website"; // Your Subject
 
 
 if (isset($_POST['name'])) {
@@ -138,7 +138,7 @@ if (filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
 	}
 	//----- reCaptcha End -----//
 
-	$success = "Thank you for contacting us and will be in touch with you very soon."; // Success Message
+	$success = "Thank you for contacting !! I will be in touch with you very soon."; // Success Message
 
 	try {
 		$resp = $mail->send();
