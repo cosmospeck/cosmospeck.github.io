@@ -1,0 +1,102 @@
+body {
+    background-color: black;
+    color: #00ff00;
+    border: 1px solid;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+}
+blockquote {
+    color: #00ff00;
+    font-size: 3em;
+    text-align: center;
+}
+div#content {
+    color: #00ff00;
+    font-size: 2em;
+    text-align: center;
+}
+textarea {
+    width: 50%;
+    background: rgba(0, 255, 0, 0.31);
+    color: #fff;
+    font-size: 19px;
+    padding: 10px;
+}
+.flip {
+    -webkit-perspective: 800;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: 50px auto;
+}
+
+/*this specifies the transition effects*/
+
+.flip .card.flipped {
+    -webkit-transform-origin: 50% 50%;
+    -webkit-transform: rotatex(-1980deg);
+    transition: all 1s ease 0s;
+}
+.flip .card.lowered {
+    /*-webkit-transform-origin: 0% 0%;*/
+    -webkit-transform: translate(0px, 200px);
+    transition: all 2s ease 0s;
+}
+
+/*flipped and lowered*/
+
+.flip .card.flipped.lowered {
+    transition: all 1s ease 0s;
+    -webkit-transform: translate(0px, 200px) rotatex(-1980deg);
+}
+.flip .card.flippedit {
+    -webkit-transform-origin: 50% 50%;
+    -webkit-transform: rotatex(-3960deg);
+    transition: all 1s ease 0s;
+}
+.flip .card.dim {
+    opacity: .25;
+    transition: all .25s ease 0s;
+}
+.flip .card {
+    width: 100%;
+    height: 100%;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: 1s;
+}
+.flip .card .face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    z-index: 2;
+    font-family: Georgia;
+    font-size: 3em;
+    text-align: center;
+    line-height: 200px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+.flip .card .front {
+    position: absolute;
+    z-index: 1;
+    background: black;
+    color: #00ff00;
+    cursor: pointer;
+    border: 1px solid #00ff00;
+}
+.flip .card .back {
+    -webkit-transform: rotatex(180deg);
+    background: blue;
+    background: #00ff00;
+    color: black;
+    cursor: pointer;
+    border: 4px solid black;
+}
+button {
+    font-size: 48px;
+}
+
+}
