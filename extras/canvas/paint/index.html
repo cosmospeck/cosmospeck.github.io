@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Doodle Canvas</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+
+   	
+  	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="js/jquery.simple-color-picker.js"></script>
+	<link type="text/css" href="css/jquery.simple-color-picker.css" rel="stylesheet" />
+	
+    <script type="text/javascript" src="js/main.js"></script>
+    <!-- <script type="text/javascript" src="js/draw.js"></script> -->
+    <script type='text/javascript' src='js/paper.js'></script>
+	
+	<script type="text/javascript">
+    paper.install(window);
+    window.onload = function () {
+
+    	var canvas = document.getElementById('s_canvas');
+		// Create an empty project and a view for the canvas:
+		paper.setup(canvas);
+        document.getElementById('clear').onclick = function(){
+
+         	paper.project.clear();
+
+            //paper.project.activeLayer.removeChildren();
+            //paper.view.draw();
+
+        } 
+
+    };
+  </script>
+
+    <script type="text/paperscript" canvas="s_canvas">
+        var path;
+
+        function onMouseDown(event) {
+            // If we produced a path before, deselect it:
+            if (path) {
+                path.selected = false;
+            }
+
+			if($( "select#stroke_type" ).val() == 'freehand') {
+			
+				// Create a new path and set its stroke color to black:
+				path = new Path({
+					segments: [event.point],
+					selected: false
+				});
+				path.strokeColor = $('div#colorpicker input').val();
+				path.strokeWidth = $("input#range_val").val();
+				//path.fillColor = $('div#colorpicker input').val();
+				path.strokeCap = $('select#stroke_cap').val();
+				//path.strokeJoin = $("select#stroke_join").val();
+				path.dashArray = [$("input#dash_line").val(), $("input#dash_gap").val()];
+			}            
+        }
+
+        // While the user drags the mouse, points are added to the path
+        // at the position of the mouse:
+        function onMouseDrag(event) {
+            //path.add(event.point);
+			
+			if($( "select#stroke_type" ).val() == 'circle') {
+			
+				// Create a new path and set its stroke color to black:
+				path = new Path.Circle({
+								center: event.downPoint,
+								radius: (event.downPoint - event.point).length,								
+								//strokeColor: 'red'
+							});
+				path.strokeColor = $('div#colorpicker input').val();
+				path.strokeWidth = $("input#range_val").val();
+				//path.fillColor = $('div#colorpicker input').val();
+				//path.strokeCap = $('select#stroke_cap').val();
+				//path.strokeJoin = $("select#stroke_join").val();
+				path.dashArray = [$("input#dash_line").val(), $("input#dash_gap").val()];
+				path.removeOnDrag();
+			}
+			if($( "select#stroke_type" ).val() == 'square') {
+			
+				var rectangle = new Rectangle(event.downPoint, (event.downPoint - event.point).length);
+				var cornerSize = new Size(0, 5);
+				var shape = new Shape.Rectangle(rectangle, cornerSize);
+				//shape.strokeColor = 'black';
+			
+				shape.strokeColor = $('div#colorpicker input').val();
+				shape.strokeWidth = $("input#range_val").val();
+				//path.fillColor = $('div#colorpicker input').val();
+				shape.strokeCap = $('select#stroke_cap').val();
+				//path.strokeJoin = $("select#stroke_join").val();
+				shape.dashArray = [$("input#dash_line").val(), $("input#dash_gap").val()];
+				path.removeOnDrag();
+				shape.removeOnDrag();
+			}			
+			else {
+				path.add(event.point);
+			}
+			
+        }
+
+        // When the mouse is released, we simplify the path:
+        function onMouseUp(event) {
+            //path.simplify(0);
+        }
+
+    </script>
+
+</head>
+<body>
+
+<div class="title center">
+	DOODLE CANVAS
+</div>
+<!-- <img id="side_image" src="http://www.sanchivarma.com/canvas/paint/images/baby.gif" style="
+    width: 200px;
+    display: inline-block;
+    float: right;
+"> -->
+<div>
+
+	Stroke Type :
+	<select id="stroke_type">
+	  <option value="freehand">Freehand</option>
+	  <option value="circle">Circle</option>
+	  <option value="square">Square</option>
+	</select>
+	<br/><br/>
+
+	Stroke color : 
+		<div id="colorpicker">
+			<input  id="tcolor" type="text" placeholder="Enter color hash" name="color" />
+			<div id="selcolor"></div>
+		</div>
+	<br/><br/>
+
+	Stroke Width:
+	<input type="range"  id="stroke_width" name="stroke_width" value="1" min="1" max="100" required>
+	<input type="number" id="range_val" name="range_val" min="1" max="100" required >
+	<br/><br/>
+
+	Stroke Line Style
+	<select id="stroke_cap">
+	  <option value="round">Round</option>
+	  <option value="square">Square</option>
+	  <option value="delta">Delta</option>
+	</select>
+	<br/><br/>
+
+	Dashed Strokes ?<br/>
+	Line width : <input type="number"  id="dash_line" name="dash_line" value="0" min="0" max="10" required><br/>
+	Gap width : <input type="number" id="dash_gap" name="dash_gap" value="0" min="0" max="10" required >
+	<br/><br/>
+	
+	Canvas background color :
+	<div id="bgcolorpicker">
+			<input  id="canvas_color" type="text" placeholder="Enter color hash" name="color" />
+		</div>
+	<br/><br/>
+
+	<!-- Edge Style
+	<select id="stroke_join">
+	  <option value="round">Round</option>
+	  <option value="miter">Miter</option>
+	  <option value="bevel">Bevel</option>
+	</select>
+	<br/><br/> -->
+
+	<button type="button" id="clear">Clear Canvas</button>
+
+
+</div>
+
+<div id="canvasDiv">
+	<canvas id="s_canvas"></canvas>
+</div>
+
+<button class="btn btn-success" data-toggle="collapse" data-target="#supported_browsers">SUPPORTED BROWSERS</button>
+<div id="supported_browsers" class="collapse">
+	Canvas Supported Browsers : 
+	<ul>
+		<li>Internet Explorer (9.0+)</li>
+		<li>Safari (3.0+)</li>
+		<li>Firefox (3.0+)</li>
+		<li>Chrome (3.0+)</li>
+		<li>Opera (10.0+)</li>
+		<li>iOS (1.0+)</li>
+		<li>Android (1.0+)</li>
+	</ul>
+</div>
+<br/><br/><br/><br/><br/>
+
+</body>
+</html>
